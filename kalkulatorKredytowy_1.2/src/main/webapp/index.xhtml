@@ -18,18 +18,25 @@
                   
                     Kwota kredytu: <h:inputText required="true" id="kwotaKredytu" requiredMessage="Kwota kredytu musi wynosić przynajmniej 1" 
                                                 converterMessage="Wprowadź poprawną liczbę"
+                                                validatorMessage="Kwota musi wynosić przynajmniej 1"
                                                 value="#{KalkulatorKredytowyKlasa.kwotaKredytu}">
-                         <f:validateDoubleRange minimum="1" 
-                           validatorMessage="Kwota kredytu musi wynosić przynajmniej 1" /> <!-- kod do poprawy -->
+                         <f:validateDoubleRange minimum="1" /> 
                     </h:inputText><br />
                     <h:message id="msg1" for="kwotaKredytu"/>
                     Stopa procentowa: <h:inputText required="true" requiredMessage="pole wymagane"
                                                    converterMessage="Wprowadź poprawną liczbę"
-                                                   id="stopaKredytu" value="#{KalkulatorKredytowyKlasa.stopaKredytu}" /><br />
+                                                   validatorMessage="Stopa nie może być ujemna"
+                                                   id="stopaKredytu" value="#{KalkulatorKredytowyKlasa.stopaKredytu}" >
+                    <f:validateDoubleRange minimum="0" /> 
+                    </h:inputText><br />
                     <h:message id="msg2" for="stopaKredytu"/>
-            Okres spłaty Kredytu: <h:inputText required="true" requiredMessage="Podaj lata"
+            Okres spłaty Kredytu (w latach): <h:inputText required="true" requiredMessage="Podaj lata"
                                                converterMessage="Wprowadź poprawną liczbę"
-                                               id="okresKredytu" value="#{KalkulatorKredytowyKlasa.okresKredytu}" /><br />
+                                               validatorMessage="okres nie może być ujemny"
+
+                                               id="okresKredytu" value="#{KalkulatorKredytowyKlasa.okresKredytu}" >
+             <f:validateDoubleRange minimum="0" /> 
+            </h:inputText><br />
             <h:message id="msg3" for="okresKredytu"/>
             <!-- Przycisk do obliczenia kredytu -->
            
