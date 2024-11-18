@@ -9,23 +9,23 @@
         <h:form>
                 <h:panelGrid columns="2" cellpadding="3" styleClass="bottom-space">
                   
-                    #{msg.loanAmount}: <h:inputText required="true" id="kwotaKredytu" requiredMessage="Kwota kredytu musi wynosić przynajmniej 1" 
-                                                converterMessage="Wprowadź poprawną liczbę"
-                                                validatorMessage="Kwota musi wynosić przynajmniej 1"
+                    #{msg.loanAmount}: <h:inputText required="true" id="kwotaKredytu" requiredMessage="#{msg.requiredLoanAmount}" 
+                                                converterMessage="#{msg.invalidLoanAmount}"
+                                                validatorMessage="#{msg.invalidLoanAmount}"
                                                 value="#{KalkulatorKredytowyKlasa.kwotaKredytu}">
                          <f:validateDoubleRange minimum="1" /> 
                     </h:inputText><br />
                     <h:message id="msg1" for="kwotaKredytu"/>
-                    #{msg.interestRate}: <h:inputText required="true" requiredMessage="pole wymagane"
-                                                   converterMessage="Wprowadź poprawną liczbę"
-                                                   validatorMessage="Stopa nie może być ujemna"
+                    #{msg.interestRate}: <h:inputText required="true" requiredMessage="#{msg.requiredInterestRate}"
+                                                   converterMessage="#{msg.invalidInterestRate}"
+                                                   validatorMessage="#{msg.invalidInterestRate}"
                                                    id="stopaKredytu" value="#{KalkulatorKredytowyKlasa.stopaKredytu}" >
                     <f:validateDoubleRange minimum="0" /> 
                     </h:inputText><br />
                     <h:message id="msg2" for="stopaKredytu"/>
-            #{msg.loanTerm}: <h:inputText required="true" requiredMessage="Podaj lata"
-                                               converterMessage="Wprowadź poprawną liczbę"
-                                               validatorMessage="okres nie może być ujemny"
+            #{msg.loanTerm}: <h:inputText required="true" requiredMessage="#{msg.requiredLoanTerm}"
+                                               converterMessage="##{msg.invalidLoanTerm}"
+                                               validatorMessage="#{msg.invalidLoanTerm}"
 
                                                id="okresKredytu" value="#{KalkulatorKredytowyKlasa.okresKredytu}" >
              <f:validateDoubleRange minimum="0" /> 
