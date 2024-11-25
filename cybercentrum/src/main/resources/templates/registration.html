@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/header :: head"></th:block>
+<body>
+<div class="login-container">
+    <h2>Rejestracja</h2>
+    <form action="#" method="post">
+            <label for="username">Nazwa użytkownika:</label><br/>
+            <input type="text" id="username" name="username" required><br/>
+            <label for="password">Hasło:</label><br/>
+            <input type="password" id="password" name="password" required><br/>
+            <label for="password-retype">Powtórz hasło:</label><br/>
+            <input type="password" id="password-retype" name="password-retype" required><br/>
+        <button type="submit">Utwórz konto</button><br/>
+    </form>
+    <p>Masz konto? <a th:href="@{/login}">Zaloguj się</a></p>
+</div>
+</body>
+</html>

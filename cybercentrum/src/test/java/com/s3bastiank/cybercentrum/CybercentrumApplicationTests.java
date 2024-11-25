@@ -1,4 +1,4 @@
-package com.sebastiank.cybercentrum;
+package com.s3bastiank.cybercentrum;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

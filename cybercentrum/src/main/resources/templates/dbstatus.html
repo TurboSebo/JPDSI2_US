@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+    <th:block th:replace="fragments/header :: head"></th:block>
+<body>
+<h1>Sprawdź połączenie z bazą danych</h1>
+<form action="#" th:action="@{/dbstatus}" method="get">
+    <button type="submit">Check Connection</button>
+</form>
+<div th:if="${result}">
+    <p th:text="${result}">Tu wyświetlone zostaną wyniki</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="header">
+    <h1>Cybercentrum</h1>
+    <nav>
+        <ul>
+            <li><a th:href="@{/static}">Home</a></li>
+            <li><a th:href="@{/login}">Login</a></li>
+            <li><a th:href="@{/dbcheck}">DB Check</a></li>
+        </ul>
+    </nav>
+</header>
+
+<footer th:fragment="footer">
+    <p>Cybercentrum &copy; 2024 Sebastian Kałuża</p>
+</footer>
+</body>
+</html>
