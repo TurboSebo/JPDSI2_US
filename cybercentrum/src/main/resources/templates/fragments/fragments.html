@@ -2,18 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <header th:fragment="header">
-    <h1>Cybercentrum</h1>
-    <nav>
+    <div id="logo"><h1><a th:href="@{/}">Cybercentrum</a></h1></div>
+    <div id="menu">
         <ul>
-            <li><a th:href="@{/static}">Home</a></li>
+            <li><a th:href="@{/}">Strona główna</a></li>
             <li><a th:href="@{/login}">Login</a></li>
             <li><a th:href="@{/dbcheck}">DB Check</a></li>
         </ul>
-    </nav>
+    </div>
 </header>
 
+
 <footer th:fragment="footer">
-    <p>Cybercentrum &copy; 2024 Sebastian Kałuża</p>
+    <p>Cybercentrum &copy; 2024 Sebastian Kałuża</p>Designed by <a href="http://www.freecsstemplates.org">Free CSS Templates</a></p>
 </footer>
 </body>
 </html>

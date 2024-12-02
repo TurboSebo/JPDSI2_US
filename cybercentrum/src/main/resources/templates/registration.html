@@ -1,19 +1,35 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="fragments/header :: head"></th:block>
+<th:block th:replace="fragments/head :: head"></th:block>
 <body>
+<th:block th:replace="fragments/fragments :: header"></th:block>
 <div class="login-container">
-    <h2>Rejestracja</h2>
-    <form action="#" method="post">
-            <label for="username">Nazwa użytkownika:</label><br/>
-            <input type="text" id="username" name="username" required><br/>
-            <label for="password">Hasło:</label><br/>
-            <input type="password" id="password" name="password" required><br/>
-            <label for="password-retype">Powtórz hasło:</label><br/>
-            <input type="password" id="password-retype" name="password-retype" required><br/>
-        <button type="submit">Utwórz konto</button><br/>
-    </form>
-    <p>Masz konto? <a th:href="@{/login}">Zaloguj się</a></p>
+    <div id="content">
+        <div id="primaryContentContainer">
+            <div id="primaryContent">
+                <h2>Rejestracja</h2>
+                <form action="#" method="post">
+                    <label for="username">Nazwa użytkownika:</label><br/>
+                    <input type="text" id="username" name="username" required><br/>
+                    <label for="password">Hasło:</label><br/>
+                    <input type="password" id="password" name="password" required><br/>
+                    <label for="password-retype">Powtórz hasło:</label><br/>
+                    <input type="password" id="password-retype" name="password-retype" required><br/>
+                    <button type="submit">Utwórz konto</button><br/>
+                </form>
+                <p>Masz konto? <a th:href="@{/login}">Zaloguj się</a></p>
+            </div>
+        </div>
+        <div id="secondaryContent">
+            <h3>Moje konto</h3>
+
+
+        </div>
+        <div class="clear"></div>
+    </div>
+
 </div>
+<footer th:replace="fragments/fragments :: footer"></footer>
+
 </body>
 </html>
