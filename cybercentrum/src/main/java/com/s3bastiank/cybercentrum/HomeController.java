@@ -14,8 +14,8 @@ public class HomeController {
         model.addAttribute("pageTitle", "Logowanie - Cybercentrum");
         return "login";
     }
-    @GetMapping("/register") public String register(Model model) {
-        model.addAttribute("pageTitle", "Rejestracja - Cybercentrum");
-        return "registration";
-    }
+//    @GetMapping("/register") public String register(Model model) {
+//        model.addAttribute("pageTitle", "Rejestracja - Cybercentrum");
+//        return "registration";
+//    }
 }
