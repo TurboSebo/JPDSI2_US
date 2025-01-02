@@ -14,11 +14,21 @@
                 <form th:action="@{/register}" th:object="${user}" method="post">
                     <label for="username">Nazwa użytkownika:</label><br/>
                     <input type="text" id="username" th:field="*{username}" name="username" required><br/>
-                    <label for="email">Adres email:</label>
+                    <label for="email">Adres email:</label><br/>
                     <input type="email" th:field="*{email}" id="email"><br/>
+                    <!-- hasło -->
                     <label for="password">Hasło:</label><br/>
                     <input type="password" id="password" th:field="*{password}" name="password" required><br/>
+                    <!-- Powtórz hasło -->
+                    <label for="confirmPassword">Powtórz hasło:</label><br/>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required><br/>
+                    <!-- Akceptacja regulaminu -->
+                    <label>
+                        <input type="checkbox" id="terms" name="terms" required>
+                        Akceptuję <a href="#" target="_blank">regulamin</a>
+                    </label><br/><br/>
                     <button type="submit">Utwórz konto</button><br/>
+
                 </form>
                 <p>Masz konto? <a th:href="@{/login}">Zaloguj się</a></p>
             </div>

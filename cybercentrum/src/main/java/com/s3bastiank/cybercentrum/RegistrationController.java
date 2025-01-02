@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class RegistrationController {
@@ -29,11 +30,26 @@ public class RegistrationController {
         return "registration";
     }
     @PostMapping("/register")
-    public String processRegistration(@ModelAttribute User user, Model model){
+    public String processRegistration(@ModelAttribute User user,
+                                      @RequestParam("confirmPassword") String confirmPassword,
+                                      @RequestParam(value = "terms", required = false) String termsAccepted,
+                                      Model model){
+        //czy hasła zgodne?
+        if(!user.getPassword().equals(confirmPassword)){
+            model.addAttribute("error", "Hasła nie są zgodne!");
+            return "registration";
+        }
+        //czy zaakceptowano regulamin?
+        if (termsAccepted == null){
+            model.addAttribute("error", "Musisz zaakceptować regulamin");
+            return "registration";
+        }
+        //zajęta nazwa użytkownika
         if(userRepository.existsByUsername(user.getUsername())){
             model.addAttribute("error", "Nazwa użytkownika jest zajęta!");
             return "registration";
         }
+        //email zajęty
         if(userRepository.existsByEmail(user.getEmail())){
             model.addAttribute("error", "Adres email jest już zarejestrowany");
             return "registration";
