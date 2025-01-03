@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head :: head"></th:block>
+<body>
+<th:block th:replace="fragments/fragments :: header"></th:block>
+    <div id="content">
+        <div id="primaryContentContainer">
+            <div id="primaryContent">
+                <h2>Dashboard</h2>
+                <div th:if="${error}" style="color: red;">
+                    <p th:text="${error}"></p>
+                </div>
+
+                <h3>Witaj użytkowniku</h3>
+                <p>Dziś jest </p>
+                <br/>
+                <h3>Co chcesz dziś robić?</h3>
+                <ul>
+                    <li>Przeglądaj posty</li>
+                    <li>Moje posty</li>
+                    <li>Wyloguj się</li>
+
+                </ul>
+            </div>
+        </div>
+        <div id="secondaryContent">
+            <h3>Moje konto</h3>
+
+
+        </div>
+        <div class="clear"></div>
+    </div>
+
+<footer th:replace="fragments/fragments :: footer"></footer>
+
+</body>
+</html>
