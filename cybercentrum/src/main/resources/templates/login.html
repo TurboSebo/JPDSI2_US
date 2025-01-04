@@ -18,6 +18,12 @@
                     <br>
                     <button type="submit">Zaloguj</button>
                 </form>
+                <div th:if="${param.error}">
+                    <p style="color: red;">Błędna nazwa użytkownika lub hasło</p>
+                </div>
+                <div th:if="${param.logout}">
+                    <p style="color: green;">Wylogowano pomyślnie</p>
+                </div>
                 <div th:if="${error}">
                     <p style="color: red;" th:text="${error}">Błąd logowania</p>
                 </div>
