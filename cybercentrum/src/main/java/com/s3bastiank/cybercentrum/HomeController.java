@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping("/")
-    public String home() {return "index"; // Nazwa szablonu HTML bez rozszerzenia
+    public String home() {
+        return "index"; // Nazwa szablonu HTML bez rozszerzenia
     }
+
     @GetMapping("/login") public String login(Model model) {
         model.addAttribute("pageTitle", "Logowanie - Cybercentrum");
         return "login";

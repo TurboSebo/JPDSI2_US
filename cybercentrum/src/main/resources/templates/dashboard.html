@@ -11,21 +11,20 @@
                     <p th:text="${error}"></p>
                 </div>
 
-                <h3>Witaj użytkowniku</h3>
+                <h1>Witaj, <span th:text="${username}"></span>!</h1>
+
                 <p>Dziś jest </p>
                 <br/>
                 <h3>Co chcesz dziś robić?</h3>
                 <ul>
                     <li>Przeglądaj posty</li>
                     <li>Moje posty</li>
-                    <li>Wyloguj się</li>
+                    <li><a th:href="@{/logout}">Wyloguj się</a></li>
 
                 </ul>
             </div>
         </div>
-        <div id="secondaryContent">
-            <h3>Moje konto</h3>
-
+        <div th:replace="fragments/fragments :: secondaryContent">
 
         </div>
         <div class="clear"></div>
