@@ -7,26 +7,13 @@
     <div id="content">
         <div id="primaryContentContainer">
             <div id="primaryContent">
-                <h2>Logowanie</h2>
-                <form th:action="@{/login}" method="post">
-                    <label for="username">Nazwa użytkownika:</label>
-                    <input type="text" id="username" name="username" required>
-                    <br>
-                    <label for="password">Hasło:</label>
-                    <input type="password" id="password" name="password" required>
-                    <br>
-                    <button type="submit">Zaloguj</button>
-                </form>
-                <div th:if="${param.error}">
-                    <p style="color: red;">Błędna nazwa użytkownika lub hasło</p>
-                </div>
-                <div th:if="${param.logout}">
-                    <p style="color: green;">Wylogowano pomyślnie</p>
-                </div>
-                <div th:if="${error}">
-                    <p style="color: red;" th:text="${error}">Błąd logowania</p>
-                </div>
-                <p>Nie masz konta? <a th:href="@{/register}">Utwórz za darmo!</a></p>
+                <h2>Konto</h2>
+                <p>Nazwa użytkownika: <span></span></p>
+                <br/>
+                <p>O mnie:</p>
+                <label>
+                    <textarea rows="4" cols="50" ></textarea>
+                </label>
             </div>
         </div>
         <div id="secondaryContent">
@@ -35,7 +22,6 @@
         <div class="clear"></div>
     </div>
 
-</div>
 <footer th:replace="fragments/fragments :: footer"></footer>
 
 </body>
