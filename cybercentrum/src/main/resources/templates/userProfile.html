@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head}"></th:block>
+<body>
+<th:block th:replace="~{fragments/fragments :: header}"></th:block>
+
+    <div id="content">
+        <div id="primaryContentContainer">
+            <div id="primaryContent">
+                <h2>Profil</h2>
+                <p><strong>Nazwa użytkownika:</strong> <span th:text="${user.username}"></span></p>
+                <br/>
+                <p><strong>O mnie:</strong></p>
+                <p th:text="${user.aboutMe}"></p>
+                <br/>
+                <p><strong>Data rejestracji:</strong> <span th:text="${user.registrationDate}"></span> </p>
+
+                <!-- Sekcja edycji tylko dla właściciela profilu -->
+                <div th:if="${isOwner}">
+                    <h2>Edytuj swój profil</h2>
+                    <form action="/user/update" method="post">
+                        <br>
+                        <label for="aboutMe">O mnie:</label>
+                        <textarea id="aboutMe" name="aboutMe" th:value="${user.aboutMe}"></textarea>
+                        <br/>
+                        <button type="submit">Zapisz zmiany</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <div id="secondaryContent">
+
+        </div>
+        <div class="clear"></div>
+    </div>
+
+<footer th:replace="~{fragments/fragments :: footer}"></footer>
+
+</body>
+</html>

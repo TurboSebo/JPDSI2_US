@@ -36,6 +36,9 @@ public class User {
     @Column(name = "kto_zarejestrowal")
     private Integer registeredBy;
 
+    @Column(name = "rola")
+    private Integer role;
+
     // Gettery i settery
     public Integer getId() {
         return id;
@@ -98,5 +101,13 @@ public class User {
 
     public void setRegisteredBy(Integer registeredBy) {
         this.registeredBy = registeredBy;
+    }
+
+    public int getRoleId() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
     }
 }

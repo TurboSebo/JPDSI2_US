@@ -4,6 +4,7 @@ import com.s3bastiank.cybercentrum.entity.RoleAssignment;
 import com.s3bastiank.cybercentrum.entity.User;
 import com.s3bastiank.cybercentrum.repository.RoleAssignmentRepository;
 import com.s3bastiank.cybercentrum.repository.UserRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +44,17 @@ public class UserService {
         // Zapis użytkownika do bazy danych
         savedUser.setRegisteredBy(savedUser.getId());
         return userRepository.save(savedUser);
+    }
+    public User getUserByUsername(String username) {
+        return  userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Użytkownik nie został znaleziony: " + username));
+    }
+
+    public void updateUserProfile(User updatedUser) {
+        User existingUser = userRepository.findByUsername(updatedUser.getUsername())
+                .orElseThrow(()-> new UsernameNotFoundException("Błąd: Użytkownik nie został znaleziony"));
+
+        existingUser.setAboutMe(updatedUser.getAboutMe());
+        existingUser.setEmail(updatedUser.getEmail());
+        userRepository.save(existingUser);
     }
 }

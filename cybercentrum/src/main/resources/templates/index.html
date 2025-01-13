@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="fragments/head :: head"></th:block>
+<th:block th:replace="~{fragments/head :: head}"></th:block>
 <body>
-<th:block th:replace="fragments/fragments :: header"></th:block>
+<th:block th:replace="~{fragments/fragments :: header}"></th:block>
 <div id="content">
     <div id="primaryContentContainer">
         <div id="primaryContent">
@@ -11,12 +11,12 @@
 
         </div>
     </div>
-    <div th:replace="fragments/fragments :: secondaryContent">
+    <div th:replace="~{fragments/fragments :: secondaryContent}">
 
     </div>
     <div class="clear"></div>
 </div>
 
-<footer th:replace="fragments/fragments :: footer"></footer>
+<footer th:replace="~{fragments/fragments :: footer}"></footer>
 </body>
 </html>
