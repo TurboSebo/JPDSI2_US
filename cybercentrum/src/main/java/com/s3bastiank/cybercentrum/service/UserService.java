@@ -54,7 +54,7 @@ public class UserService {
                 .orElseThrow(()-> new UsernameNotFoundException("Błąd: Użytkownik nie został znaleziony"));
 
         existingUser.setAboutMe(updatedUser.getAboutMe());
-        existingUser.setEmail(updatedUser.getEmail());
+        //existingUser.setEmail(updatedUser.getEmail());
         userRepository.save(existingUser);
     }
 }
