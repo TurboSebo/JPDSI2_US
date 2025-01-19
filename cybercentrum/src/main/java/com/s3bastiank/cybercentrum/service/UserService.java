@@ -30,7 +30,7 @@ public class UserService {
         // Ustawienie domyślnych wartości
         user.setRegistrationDate(LocalDateTime.now());
         user.setActiveAccount(true);
-
+        user.setRole(3); // 3 = użytkownik
         //Zapis użytkownika
         User savedUser = userRepository.save(user);
 

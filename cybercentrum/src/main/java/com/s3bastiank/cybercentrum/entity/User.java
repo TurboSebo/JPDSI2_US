@@ -110,4 +110,20 @@ public class User {
     public void setRole(Integer role) {
         this.role = role;
     }
+
+    // Metoda pomocnicza do mapowania roli na nazwę
+    public String getRoleName() {
+        switch (this.role) {
+            case 1:
+                return "ADMIN";
+            case 2:
+                return "MODERATOR";
+            case 3:
+                return "USER";
+            case 4:
+                return "GUEST";
+            default:
+                return "UNKNOWN";
+        }
+    }
 }
