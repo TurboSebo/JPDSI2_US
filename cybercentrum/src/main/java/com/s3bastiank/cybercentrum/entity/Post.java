@@ -24,6 +24,11 @@ public class Post {
     @Column(name = "czy_usuniete", nullable = false)
     private boolean deleted;
 
+    @Column(name = "data_usuniecia")
+    private LocalDateTime postDeleteDate;
+    @Column(name = "kto_usunal")
+    private String whoDeleted;
+
     @ManyToOne
     @JoinColumn(name = "id_uzytkownika", nullable = false)
     private User author;
@@ -75,4 +80,12 @@ public class Post {
     public void setAuthor(User author) {
         this.author = author;
     }
+
+    public LocalDateTime getPostDeleteDate() {return postDeleteDate;}
+
+    public void setPostDeleteDate(LocalDateTime postDeleteDate) {this.postDeleteDate = postDeleteDate; }
+
+    public String getWhoDeleted() { return whoDeleted;}
+
+    public void setWhoDeleted(String whoDeleted) { this.whoDeleted = whoDeleted; }
 }

@@ -23,7 +23,7 @@ public class UserService {
         this.roleAssignmentRepository = roleAssignmentRepository;
     }
 
-    public User registerUser(User user) {
+    public void registerUser(User user) {
         // Haszowanie hasła
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -43,7 +43,7 @@ public class UserService {
         roleAssignmentRepository.save(roleAssignment);
         // Zapis użytkownika do bazy danych
         savedUser.setRegisteredBy(savedUser.getId());
-        return userRepository.save(savedUser);
+        userRepository.save(savedUser);
     }
     public User getUserByUsername(String username) {
         return  userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Użytkownik nie został znaleziony: " + username));

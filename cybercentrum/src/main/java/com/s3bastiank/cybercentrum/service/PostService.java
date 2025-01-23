@@ -4,6 +4,7 @@ import com.s3bastiank.cybercentrum.entity.Post;
 import com.s3bastiank.cybercentrum.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -35,7 +36,11 @@ public Post getPostById(int PostId) {
         postRepository.save(post);
     }
     public void deletePostById(int PostId) {
-    postRepository.deleteById(PostId);
+        Post post = getPostById(PostId);
+        post.setDeleted(true);
+        post.setPostDeleteDate(LocalDateTime.now());
+        
+        postRepository.save(post);
     }
 
 }

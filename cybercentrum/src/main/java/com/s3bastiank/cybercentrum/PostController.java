@@ -57,8 +57,26 @@ public class PostController {
         public String viewPost(@PathVariable Integer id, Model model) {
         Post post = postService.getPostById(id);
 
+        if (post == null) {
+            throw new RuntimeException("Nie znaleziono");
+        }
+//        if (post.isDeleted()) {
+//            throw new AccessDeniedException("Nie możesz wyświetlić");
+//        }
+
+        // Pobieranie informacji o zalogowanym użytkowniku
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userService.getUserByUsername(username);
+        String currentRole = currentUser.getRoleName();
+
         model.addAttribute("post", post);
         model.addAttribute("comments", commentService.getCommentsByPostId(id));
+
+        System.out.println("Zalogowany użytkownik: " + username);
+        System.out.println("Autor posta: " + post.getAuthor().getUsername());
+        model.addAttribute("username", username);
+        model.addAttribute("post", post);
+        model.addAttribute("currentRole", currentRole);
         return "postView";
 
     }
