@@ -1,5 +1,6 @@
 package com.s3bastiank.cybercentrum.service;
 
+import com.s3bastiank.cybercentrum.CustomUserDetails;
 import com.s3bastiank.cybercentrum.repository.UserRepository;
 import com.s3bastiank.cybercentrum.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,11 +20,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Nie znaleziono użytkownika o nazwie:" + username));
 
-    return org.springframework.security.core.userdetails.User.builder()
-            .username(user.getUsername())
-            .password(user.getPassword())
-            .roles(user.getRoleName())
-            .build();
+    return new CustomUserDetails(user);
+
     }
 
 

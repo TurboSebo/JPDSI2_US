@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/register","/login", "/css/**", "/js/**", "/").permitAll()
                         .requestMatchers("/update").authenticated()
+                        .requestMatchers("/posts/create").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

@@ -7,6 +7,9 @@
 <h1 th:text="${post.title}"></h1>
 <p th:text="${post.creationDate}"></p>
 <p th:text="${post.content}"></p>
+<form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post" >
+    <button type="submit">Usuń post</button>
+</form>
 
 <h2>Komentarze</h2>
 <ul>

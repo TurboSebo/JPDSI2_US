@@ -1,16 +1,20 @@
 package com.s3bastiank.cybercentrum;
 
 import com.s3bastiank.cybercentrum.entity.Post;
+import com.s3bastiank.cybercentrum.entity.User;
 import com.s3bastiank.cybercentrum.repository.CommentsRepository;
 import com.s3bastiank.cybercentrum.repository.PostRepository;
 import com.s3bastiank.cybercentrum.service.PostService;
 import com.s3bastiank.cybercentrum.service.CommentService;
+import com.s3bastiank.cybercentrum.service.UserService;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -19,11 +23,13 @@ public class PostController {
     private PostService postService;
     private CommentService commentService;
     private PostRepository postRepository;
+    private UserService userService;
 
-    public PostController(PostRepository postRepository, CommentService commentService) {
+    public PostController(PostRepository postRepository, CommentService commentService, PostService postService, UserService userService) {
         this.postRepository = postRepository;
-        this.postService = new PostService(postRepository);
+        this.postService =  postService;
         this.commentService = commentService;
+        this.userService = userService;
     }
     @GetMapping
     public String listPosts(Model model) {
@@ -47,8 +53,6 @@ public class PostController {
     }
 
 
-
-
     @GetMapping("/{id}")
         public String viewPost(@PathVariable Integer id, Model model) {
         Post post = postService.getPostById(id);
@@ -56,6 +60,48 @@ public class PostController {
         model.addAttribute("post", post);
         model.addAttribute("comments", commentService.getCommentsByPostId(id));
         return "postView";
+
+    }
+    @GetMapping("/create")
+    public String showCreatePostForm(Model model, Post post) {
+        model.addAttribute("post", new Post());
+        return "createPost";
+    }
+    @PostMapping
+    public String createPost(@ModelAttribute("post") Post post) {
+        //pobieram nazwe użytkownika
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        //wyszukujemy go w bazie
+        User currentUser = userService.getUserByUsername(username);
+        if ("GUEST".equals(currentUser.getRoleName())||"UNKNOWN".equals(currentUser.getRoleName())) {
+            return "redirect:/error-403";
+        }
+        post.setAuthor(currentUser);
+        post.setCreationDate(LocalDateTime.now());
+        post.setDeleted(false);
+
+        postService.savePost(post);
+        return "redirect:/posts";
+    }
+
+    @PostMapping("/{id}/delete")
+    public String deletePost(@PathVariable Integer id) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userService.getUserByUsername(username);
+
+        Post post = postService.getPostById(id);
+
+        if (("ADMIN".equals(currentUser.getRoleName())) ||
+                ("MODERATOR".equals(currentUser.getRoleName())) ||
+                (post.getAuthor().equals(currentUser))) {
+            postService.deletePostById(id);
+            return "redirect:/posts";
+
+        }
+        else{
+            return "error-403";
+        }
+
 
     }
 }
