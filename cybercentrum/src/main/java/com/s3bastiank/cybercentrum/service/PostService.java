@@ -1,6 +1,7 @@
 package com.s3bastiank.cybercentrum.service;
 
 import com.s3bastiank.cybercentrum.entity.Post;
+import com.s3bastiank.cybercentrum.entity.User;
 import com.s3bastiank.cybercentrum.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
@@ -35,11 +36,11 @@ public Post getPostById(int PostId) {
 
         postRepository.save(post);
     }
-    public void deletePostById(int PostId) {
+    public void deletePostById(int PostId, User deletedBy) {
         Post post = getPostById(PostId);
         post.setDeleted(true);
+        post.setWhoDeleted(deletedBy);
         post.setPostDeleteDate(LocalDateTime.now());
-        
         postRepository.save(post);
     }
 

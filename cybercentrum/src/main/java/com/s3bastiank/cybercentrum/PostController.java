@@ -1,17 +1,15 @@
 package com.s3bastiank.cybercentrum;
 
+import com.s3bastiank.cybercentrum.entity.Comments;
 import com.s3bastiank.cybercentrum.entity.Post;
 import com.s3bastiank.cybercentrum.entity.User;
-import com.s3bastiank.cybercentrum.repository.CommentsRepository;
 import com.s3bastiank.cybercentrum.repository.PostRepository;
 import com.s3bastiank.cybercentrum.service.PostService;
-import com.s3bastiank.cybercentrum.service.CommentService;
+import com.s3bastiank.cybercentrum.service.CommentsService;
 import com.s3bastiank.cybercentrum.service.UserService;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -21,14 +19,14 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController {
     private PostService postService;
-    private CommentService commentService;
+    private CommentsService commentsService;
     private PostRepository postRepository;
     private UserService userService;
 
-    public PostController(PostRepository postRepository, CommentService commentService, PostService postService, UserService userService) {
+    public PostController(PostRepository postRepository, CommentsService commentsService, PostService postService, UserService userService) {
         this.postRepository = postRepository;
         this.postService =  postService;
-        this.commentService = commentService;
+        this.commentsService = commentsService;
         this.userService = userService;
     }
     @GetMapping
@@ -64,13 +62,16 @@ public class PostController {
 //            throw new AccessDeniedException("Nie możesz wyświetlić");
 //        }
 
+        // Pobieranie komentarzy związanych z postem
+        List<Comments> comments = commentsService.getCommentsByPostId(id);
+
         // Pobieranie informacji o zalogowanym użytkowniku
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userService.getUserByUsername(username);
         String currentRole = currentUser.getRoleName();
 
         model.addAttribute("post", post);
-        model.addAttribute("comments", commentService.getCommentsByPostId(id));
+        model.addAttribute("comments", comments);
 
         System.out.println("Zalogowany użytkownik: " + username);
         System.out.println("Autor posta: " + post.getAuthor().getUsername());
@@ -102,6 +103,7 @@ public class PostController {
         return "redirect:/posts";
     }
 
+
     @PostMapping("/{id}/delete")
     public String deletePost(@PathVariable Integer id) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -112,14 +114,51 @@ public class PostController {
         if (("ADMIN".equals(currentUser.getRoleName())) ||
                 ("MODERATOR".equals(currentUser.getRoleName())) ||
                 (post.getAuthor().equals(currentUser))) {
-            postService.deletePostById(id);
+            postService.deletePostById(id, currentUser);
             return "redirect:/posts";
 
         }
         else{
             return "error-403";
         }
-
-
     }
+
+    //komentarze
+    @PostMapping("/{id}/comments/add")
+    public String addComment(@PathVariable Integer id, @RequestParam String content) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userService.getUserByUsername(username);
+
+        Post post = postService.getPostById(id);
+
+        Comments comment = new Comments();
+        comment.setContent(content);
+        comment.setCreationDate(LocalDateTime.now());
+        comment.setDeleted(false);
+        comment.setPost(post);
+        comment.setAuthor(currentUser);
+
+        commentsService.saveComment(comment);
+        return "redirect:/posts/" + id;
+    }
+
+    @PostMapping("/comments/{id}/delete")
+    public String deleteComment(@PathVariable Integer id) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userService.getUserByUsername(username);
+
+        Comments comment = commentsService.getCommentById(id);
+
+        if (("ADMIN".equals(currentUser.getRoleName())) ||
+                ("MODERATOR".equals(currentUser.getRoleName())) ||
+                (comment.getAuthor().equals(currentUser))) {
+            comment.setDeleted(true);
+            comment.setWhoDeleted(currentUser);
+            comment.setDeleteDateTime(LocalDateTime.now());
+            commentsService.saveComment(comment);
+        }
+        return "redirect:/posts/" + comment.getPost().getId();
+    }
+
+
 }

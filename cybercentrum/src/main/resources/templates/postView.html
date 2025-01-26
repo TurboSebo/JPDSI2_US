@@ -16,11 +16,22 @@
 
 <p th:text="${currentRole}"></p>
 <h2>Komentarze</h2>
+<form th:action="@{/posts/{id}/comments/add(id=${post.id})}" method="post">
+    <label>
+        <textarea name="content" placeholder="Dodaj komentarz"></textarea>
+    </label>
+    <button type="submit">Dodaj komentarz</button>
+</form>
 <ul>
-    <li th:each="comment : ${comments}">
-        <p th:text="${comment.author.username}"></p>
-        <p th:text="${comment.creationDate}"></p>
-        <p th:text="${comment.content}"></p>
+    <li th:each="comment: ${comments}">
+        <p th:if="${!comment.deleted}" th:text="${comment.content}"></p>
+        <p th:if="${comment.deleted}">[Komentarz został usunięty]</p>
+        <p><i>Dodano przez: <span th:text="${comment.author.username}"></span></i></p>
+        <p><i>Data: <span th:text="${comment.creationDate}"></span></i></p>
+        <form th:action="@{/posts/comments/{id}/delete(id=${comment.id})}" method="post"
+              th:if="${comment.author.username == #authentication.getName() or currentRole == 'ADMIN' or currentRole=='MODERATOR'}">
+            <button type="submit">Usuń komentarz</button>
+        </form>
     </li>
 </ul>
 

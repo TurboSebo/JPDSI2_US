@@ -26,8 +26,19 @@ public class Post {
 
     @Column(name = "data_usuniecia")
     private LocalDateTime postDeleteDate;
-    @Column(name = "kto_usunal")
-    private String whoDeleted;
+
+    public User getWhoDeleted() {
+        return whoDeleted;
+    }
+
+    public void setWhoDeleted(User whoDeleted) {
+        this.whoDeleted = whoDeleted;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "kto_usunal") // Klucz obcy do tabeli użytkowników
+    private User whoDeleted; // Obiekt użytkownika, który usunął post
+
 
     @ManyToOne
     @JoinColumn(name = "id_uzytkownika", nullable = false)
@@ -85,7 +96,4 @@ public class Post {
 
     public void setPostDeleteDate(LocalDateTime postDeleteDate) {this.postDeleteDate = postDeleteDate; }
 
-    public String getWhoDeleted() { return whoDeleted;}
-
-    public void setWhoDeleted(String whoDeleted) { this.whoDeleted = whoDeleted; }
 }
