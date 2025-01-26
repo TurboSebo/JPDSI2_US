@@ -1,6 +1,77 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{fragments/head :: head}"></th:block>
+<head>
+    <style>
+        /* Primary Content */
+        #primaryContent {
+            margin: 0em 0em 0em 18em;
+            padding: 1.5em;
+            border-left: dotted 1px #cacaca;
+            background-color: #f9f9f9; /* Jasne tło dla głównej sekcji */
+        }
+
+        /* Styl dla postów */
+        #primaryContent ul {
+            list-style-type: none; /* Usunięcie standardowych punktów listy */
+            padding: 0;
+        }
+
+        #primaryContent li {
+            background-color: #fff; /* Tło pojedynczego posta */
+            border: 1px solid #ddd; /* Delikatny obrys */
+            border-radius: 8px; /* Zaokrąglenie rogów */
+            padding: 20px;
+            margin-bottom: 15px; /* Odstęp między postami */
+            transition: box-shadow 0.3s ease, transform 0.3s ease; /* Animacja na hover */
+        }
+
+        #primaryContent li:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* cień na hover */
+            transform: translateY(-5px); /* Przemieszczanie posta do góry na hover */
+        }
+
+        /* Tytuł posta */
+        #primaryContent li a {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #primaryContent li a:hover {
+            color: #AF0A0A; /* Kolor tytułu po najechaniu */
+        }
+
+        /* Data i treść posta */
+        #primaryContent li p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        /* Styl dla daty */
+        #primaryContent li p:nth-child(2) {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* Styl dla treści */
+        #primaryContent li p:nth-child(3) {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Zmiana wyglądu daty i treści w przypadku długich postów */
+        #primaryContent li p:nth-child(3) {
+            color: #666;
+        }
+
+    </style>
+</head>
 <body>
 <th:block th:replace="~{fragments/fragments :: header}"></th:block>
 <div id="content">
