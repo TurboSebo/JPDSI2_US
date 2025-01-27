@@ -88,11 +88,11 @@ public class UserController {
 
         // Sprawdzamy, czy aktualny użytkownik jest administratorem
         if (currentUser.getRoleName().equals("ADMIN")) {
-            // Jeśli użytkownik jest moderatorem, odebranie roli
+            // Jeśli użytkownik jest moderatorem, odbierz rolę
             if (targetUser.getRoleName().equals("MODERATOR")) {
                 userService.revokeModeratorRole(targetUser, currentUser);
             }
-            // Jeśli użytkownik jest zwykłym użytkownikiem, nadanie roli moderatora
+            // Jeśli użytkownik jest zwykłym użytkownikiem nadaj rolę moderatora
             else if (targetUser.getRoleName().equals("USER")) {
                 userService.assignModeratorRole(targetUser, currentUser);
             }
