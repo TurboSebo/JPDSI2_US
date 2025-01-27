@@ -57,4 +57,41 @@ public class UserService {
         //existingUser.setEmail(updatedUser.getEmail());
         userRepository.save(existingUser);
     }
+
+    public void deactivateUser(User userToDeactivate) {
+        userToDeactivate.setActiveAccount(false);
+        userRepository.save(userToDeactivate);
+    }
+    public void activateUser(User user) {
+        user.setActiveAccount(true);
+        userRepository.save(user);
+    }
+
+    public void assignModeratorRole(User user, User whoGranted) {
+        //Przypisanie roli
+        RoleAssignment roleAssignment = new RoleAssignment();
+        user.setRole(2);
+        userRepository.save(user);
+        //Przypisanie roli
+        roleAssignment.setUserId(user.getId());
+        roleAssignment.setRoleId(2);
+        roleAssignment.setGrantedAt(LocalDateTime.now());
+        roleAssignment.setWhoGranted(whoGranted.getId());
+        roleAssignmentRepository.save(roleAssignment);
+    }
+
+    public void revokeModeratorRole(User user, User whoRevoked) {
+        user.setRole(3);
+        userRepository.save(user);
+        //Przypisanie roli
+        RoleAssignment roleAssignment = new RoleAssignment();
+        roleAssignment.setUserId(user.getId());
+        roleAssignment.setRoleId(2);
+        roleAssignment.setGrantedAt(LocalDateTime.now());
+        roleAssignment.setWhoGranted(whoRevoked.getId());
+        roleAssignmentRepository.save(roleAssignment);
+
+
+    }
+
 }

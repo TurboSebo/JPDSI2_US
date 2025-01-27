@@ -24,7 +24,7 @@ public class SessionController {
             return "redirect:/login";
         }
         String username = principal.getName();
-        return "redirect:/user" + username;
+        return "redirect:/user/" + username;
     }
 
 }

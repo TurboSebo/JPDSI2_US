@@ -15,6 +15,26 @@
                 <br/>
                 <p><strong>Data rejestracji:</strong> <span th:text="${user.registrationDate}"></span> </p>
 
+                <!-- Sekcja dla administratora i moderatora -->
+                <div th:if="${currentRole == 'ADMIN' or (currentRole == 'MODERATOR' and user.roleName == 'USER')}">
+                    <form th:action="@{|/user/${user.username}/deactivate|}" method="post" th:if="${user.activeAccount}">
+                        <button type="submit">Dezaktywuj użytkownika</button>
+                    </form>
+                    <form th:action="@{|/user/${user.username}/activate|}" method="post" th:if="${!user.activeAccount}">
+                        <button type="submit">Aktywuj użytkownika</button>
+                    </form>
+                </div>
+                <div th:if="${currentRole == 'ADMIN'}">
+                    <form th:action="@{|/user/${user.username}/toggleModerator|}" method="post">
+                        <button type="submit" th:text="${user.roleName == 'MODERATOR' ? 'Odbierz rolę moderatora' : 'Nadaj rolę moderatora'}"></button>
+                    </form>
+                </div>
+                <!-- Komunikat o zdezaktywowaniu konta -->
+                <div th:if="${!user.activeAccount}" style="color: red; font-weight: bold;">
+                    Konto zostało zdezaktywowane.
+                </div>
+                <p th:text="${currentRole}"></p>
+
                 <!-- Sekcja edycji tylko dla właściciela profilu -->
                 <div th:if="${isOwner}">
                     <h2>Edytuj swój profil</h2>
