@@ -1,39 +1,52 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <title>Szczegóły posta</title>
-</head>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head}"></th:block>
 <body>
-<h1 th:text="${post.title}"></h1>
-<p th:text="${post.creationDate}"></p>
-<p th:text="${post.content}"></p>
-<p th:text="${post.author.username}"></p>
-<form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post" th:if="${post.author.username == #authentication.getName() or currentRole=='ADMIN' or currentRole=='MODERATOR'}">
-    <button type="submit">Usuń post</button>
-</form>
-<!--<form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post" th:if="${#authentication.principal.user.roleName == 'ADMIN' or #authentication.principal.user.roleName == 'MODERATOR' or post.author.username == #authentication.name}">-->
+<th:block th:replace="~{fragments/fragments :: header}"></th:block>
 
-<p th:text="${currentRole}"></p>
-<h2>Komentarze</h2>
-<form th:action="@{/posts/{id}/comments/add(id=${post.id})}" method="post">
-    <label>
-        <textarea name="content" placeholder="Dodaj komentarz"></textarea>
-    </label>
-    <button type="submit">Dodaj komentarz</button>
-</form>
-<ul>
-    <li th:each="comment: ${comments}">
-        <p th:if="${!comment.deleted}" th:text="${comment.content}"></p>
-        <p th:if="${comment.deleted}">[Komentarz został usunięty]</p>
-        <p><i>Dodano przez: <span th:text="${comment.author.username}"></span></i></p>
-        <p><i>Data: <span th:text="${comment.creationDate}"></span></i></p>
-        <form th:action="@{/posts/comments/{id}/delete(id=${comment.id})}" method="post"
-              th:if="${comment.author.username == #authentication.getName() or currentRole == 'ADMIN' or currentRole=='MODERATOR'}">
-            <button type="submit">Usuń komentarz</button>
-        </form>
-    </li>
-</ul>
+<div class="login-container">
+    <div id="content">
+        <div id="primaryContentContainer">
+            <div id="primaryContent">
+                <h1 th:text="${post.title}"></h1>
+                <p th:text="${post.creationDate}"></p>
+                <p th:text="${post.content}"></p>
+                <p th:text="${post.author.username}"></p>
+                <form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post" th:if="${post.author.username == #authentication.getName() or currentRole=='ADMIN' or currentRole=='MODERATOR'}">
+                    <button type="submit">Usuń post</button>
+                </form>
+                <!--<form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post" th:if="${#authentication.principal.user.roleName == 'ADMIN' or #authentication.principal.user.roleName == 'MODERATOR' or post.author.username == #authentication.name}">-->
+
+                <p th:text="${currentRole}"></p>
+                <h2>Komentarze</h2>
+                <form th:action="@{/posts/{id}/comments/add(id=${post.id})}" method="post">
+                    <label>
+                        <textarea name="content" placeholder="Dodaj komentarz"></textarea>
+                    </label>
+                    <button type="submit">Dodaj komentarz</button>
+                </form>
+                <ul>
+                    <li th:each="comment: ${comments}">
+                        <p th:if="${!comment.deleted}" th:text="${comment.content}"></p>
+                        <p th:if="${comment.deleted}">[Komentarz został usunięty]</p>
+                        <p><i>Dodano przez: <span th:text="${comment.author.username}"></span></i></p>
+                        <p><i>Data: <span th:text="${comment.creationDate}"></span></i></p>
+                        <form th:action="@{/posts/comments/{id}/delete(id=${comment.id})}" method="post"
+                              th:if="${comment.author.username == #authentication.getName() or currentRole == 'ADMIN' or currentRole=='MODERATOR'}">
+                            <button type="submit">Usuń komentarz</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+<div id="secondaryContent">
+
+</div>
+<div class="clear"></div>
+</div>
+
+</div>
+<footer th:replace="~{fragments/fragments :: footer}"></footer>
 
 </body>
 </html>
