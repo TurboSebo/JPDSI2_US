@@ -51,6 +51,39 @@
             </div>
         </div>
         <div id="secondaryContent">
+            <label for="searchBox"></label><input type="text" id="searchBox" placeholder="Szukaj użytkownika...">
+            <div id="searchResults"></div>
+
+            <script>
+                document.getElementById("searchBox").addEventListener("input", function () {
+                    let query = this.value;
+                    if (query.length < 2) {
+                        document.getElementById("searchResults").innerHTML = "";
+                        return;
+                    }
+
+                    fetch(`/api/users/search?query=${query}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            let resultsDiv = document.getElementById("searchResults");
+                            resultsDiv.innerHTML = "";
+
+                            data.forEach(user => {
+                                let userLink = document.createElement("a");
+                                userLink.href = `/user/${user.username}`;
+                                userLink.textContent = user.username;
+                                userLink.style.display = "block";
+                                userLink.style.padding = "5px";
+                                userLink.style.textDecoration = "none";
+                                userLink.style.color = "blue";
+
+                                resultsDiv.appendChild(userLink);
+                            });
+                        })
+                        .catch(error => console.error("Błąd wyszukiwania:", error));
+                });
+
+            </script>
 
         </div>
         <div class="clear"></div>
