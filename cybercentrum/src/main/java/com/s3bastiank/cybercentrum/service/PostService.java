@@ -44,4 +44,8 @@ public Post getPostById(int PostId) {
         postRepository.save(post);
     }
 
+    public List<Post> searchPostsByTitle(String query) {
+        return postRepository.findByTitleContainingIgnoreCase(query);
+    }
+
 }

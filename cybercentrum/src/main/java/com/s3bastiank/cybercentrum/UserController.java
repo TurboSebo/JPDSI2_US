@@ -2,12 +2,14 @@ package com.s3bastiank.cybercentrum;
 
 import com.s3bastiank.cybercentrum.entity.User;
 import com.s3bastiank.cybercentrum.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -100,6 +102,19 @@ public class UserController {
 
         return "redirect:/user/" + username;
     }
+    @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
+    public String listUsers(Model model) {
+        String PrincipalUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userService.getUserByUsername(PrincipalUsername);
+        String currentRole = currentUser.getRoleName();
+
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        model.addAttribute("currentRole", currentRole);
+        return "userList";
+    }
+
 
 
 

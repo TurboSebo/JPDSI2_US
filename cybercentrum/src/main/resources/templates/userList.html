@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head}"></th:block>
+<body>
+<th:block th:replace="~{fragments/fragments :: header}"></th:block>
+
+<div id="content">
+    <h2>Lista użytkowników</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Nazwa użytkownika</th>
+            <th>Rola</th>
+            <th>Status</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td><a th:href="@{|/user/${user.username}|}" th:text="${user.username}"></a></td>
+            <td th:text="${user.roleName}"></td>
+            <td th:text="${user.activeAccount ? 'Aktywne' : 'Nieaktywne'}"></td>
+            <td>
+                <form th:if="${currentRole == 'ADMIN'}" th:action="@{|/user/${user.username}/toggleModerator|}" method="post">
+                    <button type="submit" th:text="${user.getRoleName() == 'MODERATOR' ? 'Odbierz moderatora' : 'Nadaj moderatora'}"></button>
+                </form>
+                <form th:if="${currentRole == 'ADMIN' or (currentRole == 'MODERATOR' and user.roleName == 'USER')}" th:action="@{|/user/${user.username}/deactivate|}" method="post">
+                    <button type="submit" th:text="${user.activeAccount ? 'Dezaktywuj' : 'Aktywuj'}"></button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer th:replace="~{fragments/fragments :: footer}"></footer>
+
+</body>
+</html>

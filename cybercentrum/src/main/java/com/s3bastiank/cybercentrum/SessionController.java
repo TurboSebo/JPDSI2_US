@@ -12,10 +12,20 @@ import java.security.Principal;
 
 @Controller
 public class SessionController {
+
+    private final UserService userService;
+    public SessionController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping("/dashboard") public String login(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("pageTitle", "Dashboard - Cybercentrum");
         model.addAttribute("username", username);
+        // Pobieranie informacji o zalogowanym użytkowniku
+        User currentUser = userService.getUserByUsername(username);
+        String currentRole = currentUser.getRoleName();
+        model.addAttribute("currentRole", currentRole);
         return "dashboard";
     }
     @GetMapping("/profile")

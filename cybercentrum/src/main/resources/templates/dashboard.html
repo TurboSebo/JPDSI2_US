@@ -21,7 +21,7 @@
                     <li><a th:href="@{/logout}">Wyloguj się</a></li>
                     <li><a th:href="@{/profile}">Mój profil</a></li>
                     <li><a th:href="@{/posts/create}">Utwórz post</a></li>
-
+                    <li th:if="${currentRole == 'ADMIN' or currentRole =='MODERATOR'}"><a th:href="@{/user/all}">Wszyscy użytkownicy</a></li>
                 </ul>
             </div>
         </div>

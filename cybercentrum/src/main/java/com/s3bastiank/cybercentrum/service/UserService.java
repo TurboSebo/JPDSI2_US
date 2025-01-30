@@ -97,6 +97,9 @@ public class UserService {
     public List<User> searchUsersByUsername(String query) {
         return userRepository.findByUsernameContainingIgnoreCase(query);
     }
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 
 
 }

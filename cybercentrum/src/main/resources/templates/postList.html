@@ -88,9 +88,42 @@
                 </ul>
         </div>
     </div>
-    <div th:replace="~{fragments/fragments :: secondaryContent}">
+    <div id="secondaryContent">
+        <label for="searchBox"></label>
+        <input type="text" id="searchBox" placeholder="Szukaj posta...">
+        <div id="searchResults"></div>
 
+        <script>
+            document.getElementById("searchBox").addEventListener("input", function () {
+                let query = this.value;
+                if (query.length < 2) {
+                    document.getElementById("searchResults").innerHTML = "";
+                    return;
+                }
+
+                fetch(`/api/posts/search?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let resultsDiv = document.getElementById("searchResults");
+                        resultsDiv.innerHTML = "";
+
+                        data.forEach(post => {
+                            let postLink = document.createElement("a");
+                            postLink.href = `/posts/${post.id}`;
+                            postLink.textContent = post.title;
+                            postLink.style.display = "block";
+                            postLink.style.padding = "5px";
+                            postLink.style.textDecoration = "none";
+                            postLink.style.color = "blue";
+
+                            resultsDiv.appendChild(postLink);
+                        });
+                    })
+                    .catch(error => console.error("Błąd wyszukiwania:", error));
+            });
+        </script>
     </div>
+
     <div class="clear"></div>
 </div>
 
